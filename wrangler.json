@@ -1,0 +1,16 @@
+{
+	"compatibility_date": "2025-10-08",
+	"main": "src/index.ts",
+	"name": "velocity",
+	"upload_source_maps": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_id": "61e2ce84-fcf4-4d64-a0ab-cf8979c4f5c4",
+			"database_name": "Infastructure"
+		}
+	],
+	"observability": {
+		"enabled": true
+	}
+}
