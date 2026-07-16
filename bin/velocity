@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Velocity CLI entrypoint — delegates to the omarchy command center.
+# Paths and binaries remain omarchy-* for soft-fork compatibility.
+
+set -euo pipefail
+
+OMARCHY_BIN_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+exec "$OMARCHY_BIN_DIR/omarchy" "$@"

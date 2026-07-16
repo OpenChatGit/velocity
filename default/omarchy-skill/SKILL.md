@@ -1,22 +1,25 @@
 ---
 name: omarchy
 description: >
-  REQUIRED for end-user customization of Linux desktop, window manager, or system config.
-  Use when editing ~/.config/hypr/, ~/.config/waybar/, ~/.config/walker/,
-  ~/.config/alacritty/, ~/.config/foot/, ~/.config/kitty/, ~/.config/ghostty/, ~/.config/mako/,
-  or ~/.config/omarchy/. Triggers: Hyprland, window rules, animations, keybindings,
-  monitors, gaps, borders, blur, opacity, waybar, walker, terminal config, themes,
-  background, night light, idle, lock screen, screenshots, reminders, layer rules,
-  workspace settings, display config, and user-facing omarchy commands. Excludes Omarchy
-  source development in ~/.local/share/omarchy/ and `omarchy dev` workflows.
+  REQUIRED for end-user customization of Linux desktop, window manager, or system config
+  on Velocity (Omarchy soft fork). Use when editing ~/.config/hypr/, ~/.config/waybar/,
+  ~/.config/walker/, ~/.config/alacritty/, ~/.config/foot/, ~/.config/kitty/,
+  ~/.config/ghostty/, ~/.config/mako/, or ~/.config/omarchy/. Triggers: Hyprland, window
+  rules, animations, keybindings, monitors, gaps, borders, blur, opacity, waybar, walker,
+  terminal config, themes, background, night light, idle, lock screen, screenshots,
+  reminders, layer rules, workspace settings, display config, and user-facing velocity /
+  omarchy commands. Excludes Velocity source development in ~/.local/share/omarchy/ and
+  `velocity dev` / `omarchy dev` workflows.
 ---
 
-# Omarchy Skill
+# Velocity Skill
 
-Manage [Omarchy](https://omarchy.org/) Linux systems - a beautiful, modern, opinionated Arch Linux distribution with Hyprland.
+Manage [Velocity](https://github.com/OpenChatGit/velocity) Linux systems — a soft fork of [Omarchy](https://omarchy.org/) by DHH: a beautiful, modern, opinionated Arch Linux distribution with Hyprland.
+
+Prefer the `velocity` CLI (`velocity theme set`, `velocity update`). `omarchy` remains a compatibility alias for the same command center. Install paths stay under `~/.local/share/omarchy/`.
 
 This skill is for end-user customization on installed systems.
-It is not for contributing to Omarchy source code.
+It is not for contributing to Velocity/Omarchy source code.
 
 ## When This Skill MUST Be Used
 
@@ -29,18 +32,18 @@ It is not for contributing to Omarchy source code.
 - Window behavior, animations, opacity, blur, gaps, borders
 - Layer rules, workspace settings, display/monitor configuration
 - Themes, backgrounds, fonts, appearance changes
-- User-facing `omarchy` commands (`omarchy theme ...`, `omarchy refresh ...`, `omarchy restart ...`, etc.)
+- User-facing `velocity` / `omarchy` commands (`velocity theme ...`, `velocity refresh ...`, `velocity restart ...`, etc.)
 - Screenshots, screen recording, reminders, night light, idle behavior, lock screen
 
 **If you're about to edit a config file in ~/.config/ on this system, STOP and use this skill first.**
 
-**Do NOT use this skill for Omarchy development tasks** (editing files in `~/.local/share/omarchy/`, creating migrations, or running `omarchy dev ...` workflows).
+**Do NOT use this skill for Velocity development tasks** (editing files in `~/.local/share/omarchy/`, creating migrations, or running `velocity dev ...` / `omarchy dev ...` workflows).
 
 ## Critical Safety Rules
 
 **For end-user customization tasks, NEVER modify anything in `~/.local/share/omarchy/`** - but READING is safe and encouraged.
 
-This directory contains Omarchy's source files managed by git. Any changes will be:
+This directory contains Velocity's source files managed by git. Any changes will be:
 - Lost on next `omarchy update`
 - Cause conflicts with upstream
 - Break the system's update mechanism
@@ -56,7 +59,7 @@ This directory contains Omarchy's source files managed by git. Any changes will 
 ```
 
 **Reading `~/.local/share/omarchy/` is SAFE and useful** - do it freely to:
-- Understand how omarchy commands work: `omarchy theme set --help` or `cat $(which omarchy-theme-set)`
+- Understand how commands work: `velocity theme set --help` or `cat $(which omarchy-theme-set)`
 - See default configs before customizing: `cat ~/.local/share/omarchy/config/waybar/config.jsonc`
 - Check stock theme files to copy for customization
 - Reference default hyprland settings: `cat ~/.local/share/omarchy/default/hypr/*`
@@ -66,11 +69,11 @@ This directory contains Omarchy's source files managed by git. Any changes will 
 - `~/.config/omarchy/themes/<custom-name>/` - Custom themes (must be real directories)
 - `~/.config/omarchy/hooks/` - Custom automation hooks
 
-If the request is to develop Omarchy itself, this skill is out of scope. Follow repository development instructions instead of this skill.
+If the request is to develop Velocity itself, this skill is out of scope. Follow repository development instructions instead of this skill.
 
 ## System Architecture
 
-Omarchy is built on:
+Velocity is built on:
 
 | Component | Purpose | Config Location |
 |-----------|---------|-----------------|
@@ -84,22 +87,22 @@ Omarchy is built on:
 
 ## Command Discovery
 
-Omarchy ships a single `omarchy` CLI that dispatches to all `omarchy-*` binaries via `omarchy <group> <action>`. Always prefer this form — it is self-documenting and stable. The underlying `omarchy-*` binaries still exist on `PATH` and remain safe to read for source.
+Velocity ships `velocity` (preferred) and `omarchy` (compatibility alias). Both dispatch to the same `omarchy-*` binaries via `<cmd> <group> <action>`. Always prefer this form — it is self-documenting and stable.
 
 ```bash
 # List every documented command and its summary
-omarchy commands
+velocity commands
 
 # Show the commands inside a group
-omarchy theme --help
-omarchy refresh --help
-omarchy restart --help
+velocity theme --help
+velocity refresh --help
+velocity restart --help
 
 # Show help for a specific command (does not execute it)
-omarchy theme set --help
+velocity theme set --help
 
 # Machine-readable listing (binary, route, summary, args, aliases)
-omarchy commands --json
+velocity commands --json
 
 # Read a command's source to understand it
 cat $(which omarchy-theme-set)
@@ -107,21 +110,21 @@ cat $(which omarchy-theme-set)
 
 ### Command Groups
 
-Run `omarchy --help` for the full list. The most common groups:
+Run `velocity --help` for the full list. The most common groups:
 
 | Group | Purpose | Example |
 |-------|---------|---------|
-| `omarchy refresh` | Reset config to defaults (backs up first) | `omarchy refresh waybar` |
-| `omarchy restart` | Restart a service/app | `omarchy restart waybar` |
-| `omarchy toggle` | Toggle feature on/off | `omarchy toggle nightlight` |
-| `omarchy theme` | Theme management | `omarchy theme set <name>` |
-| `omarchy install` | Install optional software / packages | `omarchy install docker dbs` |
-| `omarchy launch` | Launch apps | `omarchy launch browser` |
-| `omarchy capture` | Screenshots and recordings | `omarchy capture screenshot` |
-| `omarchy reminder` | Desktop notification reminders | `omarchy reminder 15 "Pickup Jack"` |
-| `omarchy pkg` | Package management | `omarchy pkg install <pkg>` |
-| `omarchy setup` | Initial setup tasks | `omarchy setup fingerprint` |
-| `omarchy update` | System updates | `omarchy update` |
+| `velocity refresh` | Reset config to defaults (backs up first) | `velocity refresh waybar` |
+| `velocity restart` | Restart a service/app | `velocity restart waybar` |
+| `velocity toggle` | Toggle feature on/off | `velocity toggle nightlight` |
+| `velocity theme` | Theme management | `velocity theme set <name>` |
+| `velocity install` | Optional software installers | `velocity install docker dbs` |
+| `velocity launch` | Launch apps | `velocity launch browser` |
+| `velocity capture` | Screenshots and recordings | `velocity capture screenshot` |
+| `velocity reminder` | Desktop notification reminders | `velocity reminder 15 "Pickup Jack"` |
+| `velocity pkg` | Package management | `velocity pkg install <pkg>` |
+| `velocity setup` | Initial setup tasks | `velocity setup fingerprint` |
+| `velocity update` | System updates | `velocity update` |
 
 ## Configuration Locations
 
@@ -317,8 +320,8 @@ omarchy font set <name>         # Change font
 ### System
 
 ```bash
-omarchy update                  # Full system update
-omarchy version                 # Show Omarchy version
+omarchy update                  # Full system update (or: velocity update)
+omarchy version                 # Show Velocity version
 omarchy debug --no-sudo --print # Debug info (ALWAYS use these flags)
 omarchy system lock             # Lock screen
 omarchy system shutdown         # Shutdown
@@ -372,7 +375,7 @@ omarchy reminder clear
 
 ## Out of Scope
 
-This skill intentionally does not cover Omarchy source development. Do not use this skill for:
+This skill intentionally does not cover Velocity source development. Do not use this skill for:
 - Editing files in `~/.local/share/omarchy/` (`bin/`, `config/`, `default/`, `themes/`, `migrations/`, etc.)
 - Creating or editing migrations
 - Running `omarchy dev ...` commands
